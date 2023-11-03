@@ -27,7 +27,7 @@ public class RoomAmenity implements Serializable {
 	@Column(nullable = false)
 	private Long roomId;
 
-	@Column(insertable=false, updatable=false)
+	@Column(insertable = false, updatable = false)
 	private Long amenityId;
 
 	@OneToOne

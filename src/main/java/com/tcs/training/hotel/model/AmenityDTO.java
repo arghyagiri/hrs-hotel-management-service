@@ -1,6 +1,5 @@
 package com.tcs.training.hotel.model;
 
-
 import lombok.Data;
 
 @Data

@@ -23,33 +23,33 @@ import java.util.Set;
 public class HotelManagementService {
 
 	private final HotelRoomRepository hotelRoomRepository;
+
 	private final RoomAmenityRepository roomAmenityRepository;
 
 	public HotelRoom updateListing(RoomListingDTO roomListingDTO) {
 		return saveHotelRoomRecord(roomListingDTO, roomListingDTO.getRoomStatus());
 	}
 
-
 	public HotelRoom addListing(RoomListingDTO roomListingDTO) {
 		return saveHotelRoomRecord(roomListingDTO, RoomStatus.AVAILABLE);
 	}
 
 	@Transactional
-	public HotelRoom saveHotelRoomRecord(RoomListingDTO roomListingDTO, RoomStatus roomStatus){
+	public HotelRoom saveHotelRoomRecord(RoomListingDTO roomListingDTO, RoomStatus roomStatus) {
 		HotelRoom hotelRoom = HotelRoom.builder()
-				.roomStatus(roomStatus)
-				.rent(roomListingDTO.getRent())
-				.roomType(roomListingDTO.getRoomType())
-				.build();
+			.roomStatus(roomStatus)
+			.rent(roomListingDTO.getRent())
+			.roomType(roomListingDTO.getRoomType())
+			.build();
 		hotelRoomRepository.save(hotelRoom);
-		if(roomListingDTO.getAmenities() != null && !roomListingDTO.getAmenities().isEmpty()){
+		if (roomListingDTO.getAmenities() != null && !roomListingDTO.getAmenities().isEmpty()) {
 			Set<RoomAmenity> roomAmenities = new HashSet<>();
 			roomListingDTO.getAmenities().forEach(am -> {
 				RoomAmenity roomAmenity = RoomAmenity.builder()
-						.noOfAmenity(am.getNoOfAmenity())
-						.amenity(Amenity.builder().amenityId(am.getAmenityId()).build())
-						.roomId(hotelRoom.getRoomId())
-						.build();
+					.noOfAmenity(am.getNoOfAmenity())
+					.amenity(Amenity.builder().amenityId(am.getAmenityId()).build())
+					.roomId(hotelRoom.getRoomId())
+					.build();
 				roomAmenities.add(roomAmenity);
 			});
 			roomAmenityRepository.saveAll(roomAmenities);

@@ -38,6 +38,7 @@ public class HotelRoom implements Serializable {
 	private RoomType roomType;
 
 	@OneToMany
-	@JoinColumn(name="roomId")
+	@JoinColumn(name = "roomId")
 	Set<RoomAmenity> amenities;
+
 }
