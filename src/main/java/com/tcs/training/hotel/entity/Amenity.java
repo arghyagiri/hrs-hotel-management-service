@@ -31,4 +31,6 @@ public class Amenity implements Serializable {
 	@Column(nullable = false)
 	private String description;
 
+	private String icon;
+
 }

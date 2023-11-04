@@ -29,7 +29,7 @@ public class HotelController {
 	private final AmenityRepository amenityRepository;
 
 	@GetMapping("/{id}")
-	public HotelRoom getPaymentDetailsByUId(@PathVariable Long id) {
+	public HotelRoom getHotelById(@PathVariable Long id) {
 		return hotelRoomRepository.getReferenceById(id);
 	}
 
