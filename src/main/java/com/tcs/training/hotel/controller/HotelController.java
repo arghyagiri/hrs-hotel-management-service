@@ -5,6 +5,7 @@ import com.tcs.training.hotel.entity.RoomAmenity;
 import com.tcs.training.hotel.entity.HotelRoom;
 import com.tcs.training.hotel.model.RoomBookingRequest;
 import com.tcs.training.hotel.model.RoomListingDTO;
+import com.tcs.training.hotel.model.RoomStatus;
 import com.tcs.training.hotel.repository.AmenityRepository;
 import com.tcs.training.hotel.repository.RoomAmenityRepository;
 import com.tcs.training.hotel.service.HotelManagementService;
@@ -67,6 +68,11 @@ public class HotelController {
 	@GetMapping("/room-amenities")
 	public List<RoomAmenity> getRoomAmenities() {
 		return roomAmenityRepository.findAll();
+	}
+
+	@GetMapping("/listings")
+	public List<HotelRoom> getAvailableRooms() {
+		return hotelRoomRepository.findByRoomStatus(RoomStatus.AVAILABLE);
 	}
 
 }

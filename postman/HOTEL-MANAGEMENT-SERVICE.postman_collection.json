@@ -1,0 +1,205 @@
+{
+	"info": {
+		"_postman_id": "abe87fab-82a5-4a28-93c8-c41184079b17",
+		"name": "HOTEL-MANAGEMENT-SERVICE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30165012"
+	},
+	"item": [
+		{
+			"name": "Create Amenity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"WIFI\",\r\n  \"description\": \"Wireless Fidelity\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/create-amenity",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"create-amenity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Listings",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.test(\"Check if room listing successful.\", function () {\r",
+							"        pm.collectionVariables.set(\"roomId\",jsonData.roomId);\r",
+							"        pm.expect(jsonData.roomId).not.eql(undefined);\r",
+							"    });\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"rent\": 154,\r\n  \"roomType\": \"DULUX\",\r\n  \"amenities\": [\r\n    {\r\n      \"amenityId\": 1,\r\n      \"noOfAmenity\": 1\r\n    },\r\n    {\r\n      \"amenityId\": 2,\r\n      \"noOfAmenity\": 1\r\n    \r\n    }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/create-listing",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"create-listing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get room details by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/{{roomId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"{{roomId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Amenities List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/amenities",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"amenities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "room-amenities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/room-amenities",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"room-amenities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "book a room",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"roomId\": 6,\r\n  \"customerId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/book",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"book"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "all available rooms",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/listings",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"listings"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8090/hotels",
+			"type": "string"
+		},
+		{
+			"key": "roomId",
+			"value": ""
+		}
+	]
+}
