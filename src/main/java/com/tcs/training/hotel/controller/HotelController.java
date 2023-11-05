@@ -45,9 +45,19 @@ public class HotelController {
 		return hotelRoomRepository.getReferenceById(hotelRoom.getRoomId());
 	}
 
+	@PostMapping("/reserve")
+	public HotelRoom reserve(@RequestBody RoomBookingRequest hotelRoom) {
+		return hotelManagementService.reserve(hotelRoom);
+	}
+
+	@PostMapping("/un-reserve")
+	public HotelRoom unReserve(@RequestBody RoomBookingRequest hotelRoom) {
+		return hotelManagementService.unReserve(hotelRoom);
+	}
+
 	@PostMapping("/book")
 	public HotelRoom book(@RequestBody RoomBookingRequest hotelRoom) {
-		return hotelManagementService.book(hotelRoom);
+		return hotelManagementService.confirmBooking(hotelRoom);
 	}
 
 	@PostMapping("/cancel")

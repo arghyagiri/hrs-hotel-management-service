@@ -58,13 +58,35 @@ public class HotelManagementService {
 	}
 
 	@Transactional
-	public HotelRoom book(RoomBookingRequest roomBookingRequest) {
+	public HotelRoom reserve(RoomBookingRequest roomBookingRequest) {
 		HotelRoom room = hotelRoomRepository.getReferenceById(roomBookingRequest.getRoomId());
 		if (room == null || (room != null && RoomStatus.BOOKED.equals(room.getRoomStatus()))) {
 			throw new NoDataFoundException("Requested room is not found or not available at this moment.");
 		}
-		room.setRoomStatus(RoomStatus.BOOKED);
+		room.setRoomStatus(RoomStatus.RESERVED);
 		room.setCustomerId(roomBookingRequest.getCustomerId());
+		return hotelRoomRepository.save(room);
+	}
+
+	@Transactional
+	public HotelRoom unReserve(RoomBookingRequest roomBookingRequest) {
+		HotelRoom room = hotelRoomRepository.findByRoomIdAndCustomerId(roomBookingRequest.getRoomId(),
+				roomBookingRequest.getCustomerId());
+		if (room == null) {
+			throw new NoDataFoundException("Requested room is not found or not available at this moment.");
+		}
+		room.setRoomStatus(RoomStatus.AVAILABLE);
+		return hotelRoomRepository.save(room);
+	}
+
+	@Transactional
+	public HotelRoom confirmBooking(RoomBookingRequest roomBookingRequest) {
+		HotelRoom room = hotelRoomRepository.findByRoomIdAndCustomerId(roomBookingRequest.getRoomId(),
+				roomBookingRequest.getCustomerId());
+		if (room == null) {
+			throw new NoDataFoundException("Requested room is not found or not available at this moment.");
+		}
+		room.setRoomStatus(RoomStatus.BOOKED);
 		return hotelRoomRepository.save(room);
 	}
 
